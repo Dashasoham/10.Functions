@@ -89,8 +89,8 @@ greeterHey("Jonas");
 greeterHey("Steven");
 
 greet("Hello")("Jonas");
-*/
 
+*/
 const lufthansa = {
   airline: "Lufthansa",
   iataCode: "LH",
@@ -108,37 +108,85 @@ lufthansa.book(239, "Daria K");
 lufthansa.book(635, "John Smith");
 console.log(lufthansa);
 
-const euroWings = {
-  name: "Eurowings",
-  iataCode: "EW",
-  bookings: [],
-};
+// const euroWings = {
+//   airline: "Eurowings",
+//   iataCode: "EW",
+//   bookings: [],
+// };
 
 const book = lufthansa.book;
 
 // DOES NOT WORK
 // book(23, "Sarah W");
 
-book.call(euroWings, 23, "Sarah W");
-console.log(euroWings);
+// book.call(euroWings, 23, "Sarah W");
+// console.log(euroWings);
 
-book.call(lufthansa, 456, "Marry C");
-console.log(lufthansa);
+// book.call(lufthansa, 456, "Marry C");
+// console.log(lufthansa);
 
-const swiss = {
-  airline: "Swiss Airlines",
-  iataCode: "LX",
-  bookings: [],
-};
+// const swiss = {
+//   airline: "Swiss Airlines",
+//   iataCode: "LX",
+//   bookings: [],
+// };
 
-book.call(swiss, 4234, "Lucy Liu");
-console.log(swiss);
+// book.call(swiss, 4234, "Lucy Liu");
+// console.log(swiss);
 
 //Apply method
 
-const flightData = [593, "George C"];
-book.apply(swiss, flightData);
-console.log(swiss);
+// const flightData = [593, "George C"];
+// book.apply(swiss, flightData);
+// console.log(swiss);
 
-book.call(swiss, ...flightData);
-console.log(swiss);
+// book.call(swiss, ...flightData);
+// console.log(swiss);
+
+//Bind method
+// book.call(euroWings, 23, "Sarah W");
+
+// const bookEW = book.bind(euroWings);
+// const bookLH = book.bind(lufthansa);
+// const bookLX = book.bind(swiss);
+// bookEW(23, "Steven H");
+
+//Partial application
+// const bookEW23 = book.bind(euroWings, 23);
+// bookEW23("Jonas J");
+// bookEW23("Martha M");
+
+//With Event Listeners
+
+lufthansa.planes = 300;
+lufthansa.buyNewPlane = function () {
+  console.log(this);
+  this.planes++;
+  console.log(this.planes);
+};
+// lufthansa.buyNewPlane();
+document
+  .querySelector(".buy")
+  .addEventListener("click", lufthansa.buyNewPlane.bind(lufthansa));
+
+//Partial application
+
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+console.log("---CHALLENGE---");
+//Returning other Function
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
