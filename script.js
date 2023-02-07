@@ -90,7 +90,7 @@ greeterHey("Steven");
 
 greet("Hello")("Jonas");
 
-*/
+
 const lufthansa = {
   airline: "Lufthansa",
   iataCode: "LH",
@@ -190,3 +190,85 @@ const addTaxRate = function (rate) {
 const addVAT2 = addTaxRate(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
+
+const runOnce = function () {
+  console.log("Run Once1");
+};
+
+runOnce();
+
+//Immediately Invoced f-n expression
+(function () {
+  console.log("Run Once2");
+  const isPrivate = 23;
+})();
+//
+(() => console.log("Run Once3"))();
+
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+console.log(notPrivate);
+console.log(isPrivate);
+
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker();
+booker();
+booker();
+
+console.dir(booker);
+*/
+//Exapmple 1
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+g();
+f();
+//Re-assigning f-function
+h();
+f();
+console.dir(f);
+
+//Example 2
+
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${n} passengers`);
+
+    console.log(`There´re 3 groups, each with ${perGroup} passengers `);
+  }, wait * 1000);
+  console.log(`We´ll start boarding in ${wait} minutes`);
+};
+
+// const perGroup = 1000;
+boardPassengers(180, 3);
+
+// setTimeout(function () {
+//   console.log("Timer");
+// }, 1000)
